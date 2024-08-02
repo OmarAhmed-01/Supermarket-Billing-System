@@ -125,3 +125,51 @@ void shopping::user(){
         break;
     }
 }
+
+void shopping::add(){
+    m:
+    fstream data;
+    int c;
+    int token = 0;
+    float p;
+    float d;
+    string n;
+
+    cout<<"\nAdd New Product\n";
+    cout<<"_____________________\n";
+    cout<<"Add product code\n";
+    cin>>productCode;
+    cout<<"Add product name\n";
+    cin>>productName;
+    cout<<"Add product price\n";
+    cin>>price;
+    cout<<"add product disount\n";
+    cin>>discount;
+
+    data.open("database.txt",ios::in);
+    if(!data){
+        data.open("database.txt", ios::app|ios::out);
+        data<<" "<<productCode<<" "<<productName<<" "<<price<<" "<<discount<<endl;
+        data.close();
+    }
+    else{
+        data>>c>>n>>p>>d;
+        while(!data.eof()){
+            if(c == productCode){
+                token++;
+            }
+            data>>c>>n>>p>>d; 
+        }
+        data.close();
+
+        if(token == 1){
+            goto m;
+        }
+        else{
+            data.open("database.txt", ios::app|ios::out);
+            data<<" "<<productCode<<" "<<productName<<" "<<price<<" "<<discount<<endl;
+            data.close();
+        }
+    }
+    cout<<"\nProduct Added!\n";
+}
