@@ -97,6 +97,7 @@ void shopping::admin(){
         menu();
         break;
     default:
+        cout<<"Invalid Choice\n";
         break;
     }
     goto m;
@@ -104,5 +105,23 @@ void shopping::admin(){
 
 void shopping::user(){
     int choice;
-    cout<<""
+    cout<<"\nUser Menu\n";
+    cout<<"________________\n";
+    cout<<"1) Purchase\n";
+    cout<<"2) Return to Main Menu\n";
+
+    cin>>choice;
+
+    switch (choice)
+    {
+    case 1:
+        receipt();
+        break;
+    case 2:
+        menu();
+        break;
+    default:
+        cout<<"Invalid Choice\n";
+        break;
+    }
 }
