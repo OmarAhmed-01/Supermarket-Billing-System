@@ -1,7 +1,6 @@
 #include<iostream>
 #include<fstream>
 
-//this is a test for new repo
 
 using namespace std;
 
@@ -265,4 +264,81 @@ void shopping::removeProduct(){
             cout<<"\nProduct Not Found!"<<endl;
         }
     }
+}
+
+void shopping::display(){
+    fstream data;
+    data.open("database.txt", ios::in);
+    data>>productCode>>productName>>price>>discount;
+    while(!data.eof()){
+        cout<<productCode<<"\t\t"<<productName<<"\t\t"<<price<<endl;
+        data>>productCode>>productName>>price>>discount;
+    }
+    data.close();
+}
+
+void shopping::receipt(){
+    fstream data;
+    int array_of_codes[100];
+    int array_of_quantites[100];
+    char choice;
+    int counter = 0;
+    float amount = 0;
+    float discount = 0;
+    float total = 0;
+
+    cout<<"\n\nRECEIPT\n\n";
+    data.open("database.txt"); 
+    if(!data){
+       cout<<"\n\n Empty Database \n\n"; 
+    }
+    else{
+        data.close();
+        display();
+        cout<<"\n\n______________________________\n\n";
+        cout<<"              Place Order             ";
+        cout<<"\n\n______________________________\n\n";
+        do
+        {
+            m:
+            cout<<"Enter Product Code: ";
+            cin>>array_of_codes[counter];
+            cout<<endl;
+            cout<<"Enter Quantity: ";
+            cin>>array_of_quantites[counter];
+            for(int i = 0; i < counter; i++){
+               if(array_of_codes[i] == array_of_codes[counter]){
+                cout<<"\n\nDuplicated product code, enter product code again: ";
+                goto m; 
+               }
+            }
+            counter++;
+            cout<<"\n\n Another request (Y/N):";
+            cin>>choice;
+        } while (choice == 'Y' || choice == 'y');
+        
+        cout<<"\n\n\t\t\t Receipt \t\t\t\n\n";
+        cout<<"Product Number \t Product Name \t Product Quantity \t Price \t Discount\n";
+        for(int i = 0; i < counter; i++){
+            data.open("database.txt", ios::in);
+            data>>productCode>>productName>>price>>discount;
+            while(!data.eof()){
+                if(productCode == array_of_codes[i]){
+                    amount = price * array_of_quantites[i];
+                    discount = amount - (amount*discount/100);
+                    total = total + discount;
+                    cout<<"\n"<<productCode<<"\t"<<productName<<"\t"<<array_of_quantites[i]<<"\t"<<price<<"\t"<<amount<<"t"<<discount;
+                }
+                data>>productCode>>productName>>price>>discount;
+            }
+        }
+        data.close();
+    }
+    cout<<"\n\n______________________\n\n";
+    cout<<"Total Amount: "<<total<<endl;
+}
+
+int main(){
+    shopping S;
+    S.menu();
 }
