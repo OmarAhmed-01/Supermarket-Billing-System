@@ -327,7 +327,7 @@ void shopping::receipt(){
                     amount = price * array_of_quantites[i];
                     discount = amount - (amount*discount/100);
                     total = total + discount;
-                    cout<<"\n"<<productCode<<"\t"<<productName<<"\t"<<array_of_quantites[i]<<"\t"<<price<<"\t"<<amount<<"t"<<discount;
+                    cout<<"\n"<<productCode<<"\t"<<productName<<"\t"<<array_of_quantites[i]<<"\t"<<price<<"\t"<<amount<<"\t"<<discount;
                 }
                 data>>productCode>>productName>>price>>discount;
             }
